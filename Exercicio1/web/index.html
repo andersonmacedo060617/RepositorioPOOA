@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Cadastro de Perfil</h1>
+        <form action="CadastrarPerfil">
+            <b>Nome:</b><input type="text" name="cpNome" /><br />
+            <b>Sexo:</b> <input type="radio" name="cpSexo" value="M">Masculino
+                <input type="radio" name="cpSexo" value="F">Feminino<br />
+                
+            <b>Idade:</b>
+            <select name="cpIdade">
+                <option value="1">De 18 a 30 anos</option>
+                <option value="2">De 31 a 50 anos</option>
+                <option value="3">De 50 a 65 anos</option>
+                <option value="4">mais de 65 anos</option>
+            </select>
+            <br/>
+            
+            <b>Preferencia Musical:</b> <input type="checkbox" name="cpPreferencia" value="c" />Classica
+            <input type="checkbox" name="cpPreferencia" value="p" />Pop
+            <input type="checkbox" name="cpPreferencia" value="r" />Rock
+               
+            <br/><b>Descreva-se:</b><br/><textarea name="cpDescreva"></textarea>
+            <input type="submit" value="Gravar">
+        </form>
+    </body>
+</html>
