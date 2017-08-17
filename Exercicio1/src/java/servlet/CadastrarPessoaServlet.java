@@ -43,8 +43,12 @@ public class CadastrarPessoaServlet extends HttpServlet {
             p.setDescricao(request.getParameter("cpDescreva"));
             p.setSexo(request.getParameter("cpSexo"));
             p.setIdade(Integer.parseInt(request.getParameter("cpIdade")));
-            ArrayList<String> preferencias = new ArrayList<>();
-            
+            if(request.getParameterValues("cpPreferencia") != null){
+                String[] preferencias = (String[])request.getParameterValues("cpPreferencia");
+                for (int i = 0; i < preferencias.length; i++) {
+                    p.addPreferencia(preferencias[i]);
+                }
+            }
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -52,7 +56,33 @@ public class CadastrarPessoaServlet extends HttpServlet {
             out.println("<title>Servlet CadastrarPessoaServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CadastrarPessoaServlet at " + request.getContextPath() + "</h1>");
+            
+            out.println("<table border = 1>");
+            out.println("<tr>");
+            out.println("<td colspan=2>");
+            out.println("<h2 align='center'>Perfil Cadastrado</h2>");
+            out.println("</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>Nome:</td><td>"+ p.getNome() +"</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>Sexo:</td><td>"+ p.SexoToString()+"</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>Idade:</td><td>"+ p.FaixaIdadeString()+"</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>Preferencias:</td><td><ul>");
+            for (int j = 0; j < p.getPreferencias().size(); j++) {
+                out.println("<li>"+ p.getPreferencias().get(j) +"</li>");
+            }
+            out.println("</ul></td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>Descrição:</td><td>"+ p.getDescricao()+"</td>");
+            out.println("</tr>");
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         }

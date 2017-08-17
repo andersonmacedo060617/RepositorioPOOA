@@ -69,6 +69,40 @@ public class Pessoa {
         this.Preferencias = Preferencias;
     }
     
+    public void addPreferencia(String Preferencia){
+        this.Preferencias.add(Preferencia);
+    }
+    
+    public String SexoToString(){
+        if(this.getSexo() == "M"){
+            return "Masculino";
+        }
+        
+        if(this.getSexo() == "F"){
+            return "Feminino";
+        }
+        return "Não Informado";
+    }
+    
+    public String FaixaIdadeString(){
+        if(this.getFaixaIdade() == 1){
+            return "De 18 a 30 anos";
+        }
+        
+        if(this.getFaixaIdade()== 2){
+            return "De 31 a 50 anos";
+        }
+        
+        if(this.getFaixaIdade()== 3){
+            return "De 50 a 65 anos";
+        }
+        
+        if(this.getFaixaIdade()== 4){
+            return "mais de 65 anos";
+        }
+        
+        return "Não Informado";
+    }
     
     
     
