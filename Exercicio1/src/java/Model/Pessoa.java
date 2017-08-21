@@ -19,6 +19,7 @@ public class Pessoa {
 
     public Pessoa(){
         this.Preferencias = new ArrayList<>();
+        this.setSexo("N");
     }
     
     public Pessoa(String nome, String Sexo, int FaixaIdade, String Descricao) {
@@ -27,6 +28,7 @@ public class Pessoa {
         this.FaixaIdade = FaixaIdade;
         this.Descricao = Descricao;
         this.Preferencias = new ArrayList<>();
+        this.setSexo("N");
     }
 
     public String getNome() {
@@ -74,13 +76,16 @@ public class Pessoa {
     }
     
     public String SexoToString(){
-        if(this.getSexo() == "M"){
+        
+        
+        if(this.getSexo().equals("M")){
             return "Masculino";
         }
         
-        if(this.getSexo() == "F"){
+        if(this.getSexo().equals("F")){
             return "Feminino";
         }
+        
         return "Não Informado";
     }
     
