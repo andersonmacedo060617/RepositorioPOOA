@@ -53,7 +53,7 @@ public class HomeController extends HttpServlet {
             
             rd.forward(request, response);
         }else{
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");            
             rd.forward(request, response);
         }
         
