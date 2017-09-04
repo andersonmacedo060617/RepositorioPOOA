@@ -15,6 +15,11 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <a href="control">Voltar</a>
+        <a href="control?op=sair">Sair</a>
+        
+        <form action="control" method="POST">
+            <input type="hidden" name="op" value="cad" />
+            <input type="submit" value="Cadastro" />
+        </form>
     </body>
 </html>

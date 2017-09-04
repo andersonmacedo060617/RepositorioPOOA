@@ -5,24 +5,37 @@
  */
 package controller;
 
+import controller.action.ICommand;
+import controller.action.impl.CallLoginPage;
+import controller.action.impl.VerifyUserLoginPage;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Usuario;
-import model.rules.UsuarioRules;
 
 /**
  *
  * @author aluno
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/control"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
 
+    static Map<String, ICommand> comandos = new HashMap<>();
+    
+    static{
+        comandos.put("login", new CallLoginPage());
+        comandos.put("verificaLogin", new VerifyUserLoginPage());
+        
+        
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,39 +48,14 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String op = request.getParameter("op");
-        if(op == null){
-            
         
-            String login = request.getParameter("cpLogin");
-            String senha = request.getParameter("cpSenha");
-        
-            if(login == null || login.equals("")){
-                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                request.setAttribute("erro", "Login não pode ser vazio!");
-
-                rd.forward(request, response);
-            }
-        
-            Usuario u = new UsuarioRules().login(login, senha);
-            if(u==null){
-                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                request.setAttribute("erro", "Login ou senha incorreto!");
-
-                rd.forward(request, response);
-            }else{
-                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");            
-                rd.forward(request, response);
-            }
-        }else if(op.equals("sair")){
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
-        }else if(op.equals("cad")){
-            RequestDispatcher rd = request.getRequestDispatcher("");
-            rd.forward(request, response);
-        
+        String acao = request.getParameter("ac");
+        acao = acao== null?"login":acao;
+        try {
+            comandos.get(acao).execute(request, response);
+        } catch (Exception ex) {
+            //Tratar erro
         }
-        
         
     }
 
