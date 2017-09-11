@@ -102,7 +102,7 @@ public class TestaBanco {
         
         }
         
-        q = em.createQuery("select u from Despesa d where d.usuario.nome like '%Pe%'");
+        q = em.createQuery("select d from Despesa d where d.usuario.nome like '%Pe%'");
         List<Despesa> listaDesp = q.getResultList();
         for(Despesa u2 : listaDesp){
             System.out.println("==>" + u2.getDescricao()+ " - " + u2.getUsuario().getNome());

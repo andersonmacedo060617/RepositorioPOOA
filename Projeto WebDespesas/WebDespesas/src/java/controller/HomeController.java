@@ -6,7 +6,10 @@
 package controller;
 
 import controller.action.ICommand;
+import controller.action.impl.CallDespesaPage;
+import controller.action.impl.CallHomePage;
 import controller.action.impl.CallLoginPage;
+import controller.action.impl.DeslogarUsuarioPage;
 import controller.action.impl.VerifyUserLoginPage;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,6 +35,9 @@ public class HomeController extends HttpServlet {
     static{
         comandos.put("login", new CallLoginPage());
         comandos.put("verificaLogin", new VerifyUserLoginPage());
+        comandos.put("CadDespesa", new CallDespesaPage());
+        comandos.put("Deslogar", new DeslogarUsuarioPage());
+        comandos.put("Home", new CallHomePage());
         
         
     }

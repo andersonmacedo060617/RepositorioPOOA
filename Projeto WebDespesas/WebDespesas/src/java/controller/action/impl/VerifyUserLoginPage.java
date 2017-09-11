@@ -6,8 +6,11 @@
 package controller.action.impl;
 
 import controller.action.ICommand;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Usuario;
+import model.dao.UsuarioDAO;
 
 /**
  *
@@ -20,8 +23,18 @@ public class VerifyUserLoginPage implements ICommand{
         String login = request.getParameter("cpLogin");
         String senha = request.getParameter("cpSenha");
         
-        String sql = "select u from Usuario u where "
-                + " u.login = :u and u.senha = :senha";
+        Usuario user = new UsuarioDAO().login(login, senha);
+        
+        if(user != null){
+            request.getSession().setAttribute("user", user);
+            new CallHomePage().execute(request, response);
+            
+        }else{
+            request.setAttribute("erro", "Login ou senha Incorreta!!!");
+            new CallLoginPage().execute(request, response);
+        }
+        
+        
     }
     
 }
