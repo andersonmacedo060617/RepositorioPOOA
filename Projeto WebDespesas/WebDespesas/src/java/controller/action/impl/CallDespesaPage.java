@@ -18,7 +18,7 @@ public class CallDespesaPage implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("despesas.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("template.jsp?page=despesas");
         rd.forward(request, response);
     }
     

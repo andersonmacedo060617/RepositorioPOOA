@@ -13,10 +13,6 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<c:if test="${sessionScope.user == null}">
-    
-    <c:redirect url="home"/>
-</c:if>
 <html>
 	<head>
 		<title>Despesas Web</title>
@@ -40,15 +36,13 @@
 							<h1>Login</h1>
 						</header>
 						<footer>
-                                                     Olá ${sessionScope.user.nome},
-                                                     <br><br>
-                                                     Menu<br>
-                                                     Home<br>
-                                                     <a href="home?ac=CadDespesa">Despesas<br></a>  
-                                                     Categorias<br>
-                                                     Relatório<br>
-                                                     -----------<br>
-                                                     <a href="home?ac=Deslogar">Sair<br></a>
+                                                    <c:if test="${requestScope.page} == null">
+                                                        <jsp:include page="pages/login.jsp"/>
+                                                    </c:if>
+
+                                                    <c:if test="${requestScope.page == null}">
+                                                        <jsp:include page="pages/${param.page}.jsp"/>
+                                                    </c:if>
                                                     <hr />
                                                     
                                                     

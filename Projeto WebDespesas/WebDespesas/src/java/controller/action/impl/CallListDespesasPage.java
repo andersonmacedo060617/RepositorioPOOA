@@ -6,23 +6,25 @@
 package controller.action.impl;
 
 import controller.action.ICommand;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
+import model.Despesa;
+import model.dao.DespesaDAO;
 
 /**
  *
  * @author aluno
  */
-public class DeslogarUsuarioPage implements ICommand{
+public class CallListDespesasPage implements ICommand{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.getSession().removeAttribute("user");
-        RequestDispatcher rd = request.getRequestDispatcher("template.jsp?page=login");
-        request.setAttribute("msg", "Usuario Deslogado!");
-        
+        RequestDispatcher rd = request.getRequestDispatcher("template.jsp?page=listaDespesas");
+        List<Despesa> lstDespesas = new DespesaDAO().findAll();
+        request.setAttribute("lstDespesas", lstDespesas);
+        rd.forward(request, response);
     }
     
 }

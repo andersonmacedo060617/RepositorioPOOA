@@ -18,7 +18,7 @@ public class CallHomePage implements ICommand{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("template.jsp?page=home");
         rd.forward(request, response);
     }
     

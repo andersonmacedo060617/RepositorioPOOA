@@ -17,20 +17,8 @@ import model.Usuario;
  *
  * @author aluno
  */
-public class UsuarioDAO {
+public class UsuarioDAO extends DAO {
     
-    private EntityManagerFactory emf;
-    private EntityManager em;
-    
-    private void open(){
-        emf = Persistence.createEntityManagerFactory("WebDespesasPU");
-        em = emf.createEntityManager();
-    }
-    
-    private void close(){
-        em.close();
-        emf.close();
-    }
     
     public Usuario login(String login, String senha){
         open();

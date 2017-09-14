@@ -8,6 +8,7 @@ package controller;
 import controller.action.ICommand;
 import controller.action.impl.CallDespesaPage;
 import controller.action.impl.CallHomePage;
+import controller.action.impl.CallListDespesasPage;
 import controller.action.impl.CallLoginPage;
 import controller.action.impl.DeslogarUsuarioPage;
 import controller.action.impl.VerifyUserLoginPage;
@@ -38,6 +39,8 @@ public class HomeController extends HttpServlet {
         comandos.put("CadDespesa", new CallDespesaPage());
         comandos.put("Deslogar", new DeslogarUsuarioPage());
         comandos.put("Home", new CallHomePage());
+        comandos.put("ListDespesas", new CallListDespesasPage());
+        
         
         
     }
