@@ -40,5 +40,34 @@
         </c:forEach>
     </table>
 </div>
+<button id="btnNew" >Nova Despesa</button>
+<div id="cad">
+    <h1>Nova Despesa</h1>
+    <form>
+        Data: <input type="date" name="cpData" ><br />
+        Descrição: <input type="text" name="cpDescricao" ><br />
+        Categoria: <input type="text" name="cpCategoria" ><br />
+        Valor: <input type="text" name="cpValor" ><br />
+        Paga?: <input type="checkbox" value="1" name="cpPago" ><br />
+        <br />
+        <input type="submit" value="Gravar">
+    </form>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#cad").hide();
+        $("#grid").show();
+        
+        $("#btnNew").click(function(){
+           $("#cad").toggle();
+           $("#grid").toggle();
+           $("#btnNew").val($("btnNew").val() === "Voltar"?"Nova Despesa":"Voltar");
+           
+        });
+            
+        
+    });
+</script>
 
 					

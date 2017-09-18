@@ -5,11 +5,8 @@
  */
 package model.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import model.Usuario;
 
