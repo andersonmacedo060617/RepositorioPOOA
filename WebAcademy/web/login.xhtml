@@ -15,11 +15,11 @@
     <ui:define name="content">
         <h:form>
             <h:panelGrid columns="2" bgcolor="orange" title="Login" style="margin: 0 auto;">
-                Login: <h:inputText />
-                Senha: <h:inputSecret/>
+                Login: <h:inputText value="#{login.email}" />
+                Senha: <h:inputSecret value="#{login.senha}"/>
+                <h:column><h:outputLabel value="#{login.mensagem}"/> </h:column>
                 <h:column></h:column>
-                <h:column></h:column>
-                <h:commandButton value="Ok" style="width: 100%;" />
+                <h:commandButton value="Ok" style="width: 100%;" action="#{login.logar()}" />
             </h:panelGrid>
         </h:form>
     </ui:define>
