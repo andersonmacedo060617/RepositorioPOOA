@@ -8,6 +8,8 @@ package controller.bean;
 import Util.CriaHash;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import model.Professor;
 import model.dao.impl.ProfessorDAO;
 
@@ -62,16 +64,24 @@ public class LoginBean {
     
     public String logar(){
         String hash = new CriaHash(senha).getHash();
-        System.out.print(hash);
-        Professor p = new ProfessorDAO().findLoginAndaPassword(email, hash);
-        
-        if(p != null){
-            return "home";
-        }else{
-            mensagem = "Email ou Senha incorreta!";
-            
+        //System.out.println("==> "+hash);
+        professorLogado = new ProfessorDAO().findLoginAndaPassword(email, hash);
+        FacesContext.getCurrentInstance().getExternalContext().
+                getSessionMap().put("professorLogado", professorLogado);
+        if (professorLogado != null) {
+            return "security/home?faces-redirect=true";
+        } else {
+            mensagem = "Email ou Senha Incorreta!!!";
             return "";
         }
+    }
+    
+    public String logoff(){
+        professorLogado = null;
+        
+        HttpSession sessao = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        sessao.invalidate();
+        return "/index?faces-redirect=true";
     }
     
     
