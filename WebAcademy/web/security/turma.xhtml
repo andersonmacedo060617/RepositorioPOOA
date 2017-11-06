@@ -2,23 +2,89 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./../template/template.xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="left">
         <h:form>
             <ul type="none">
-                <li>  <h:commandLink >Nova Turma</h:commandLink>  </li>
-                <li>  <h:commandLink >Pesquisar</h:commandLink>  </li>
+                <li>  <h:commandLink action="#{turma.criarTurma()}">Nova Turma</h:commandLink>  </li>
+                <li>  <h:commandLink action="#{turma.pesquisa()}" >Pesquisar</h:commandLink>  </li>
                 <li>  <h:commandLink action="home">Voltar</h:commandLink>  </li>
             </ul>
         </h:form>
     </ui:define>
 
     <ui:define name="content">
-        content
-        <div></div>
         
-        
+        <h:form>
+            <h:panelGroup rendered="#{turma.status == 'search'}" >
+                Pesquisar
+                <h:panelGrid columns="2">
+                    <h:column>
+                        Ano: <h:inputText value="#{turma.ano}" />
+                    </h:column>
+                    <h:column>
+                        Semestre: <h:inputText value="#{turma.semestre}" />
+                    </h:column>
+                    <h:column>
+                        Professor: 
+                        <h:selectOneMenu value="#{turma.idProfessor}" >
+                            <f:selectItem itemLabel="Todos Professores" itemValue="-1" />
+                            <f:selectItems value="#{turma.professores}" var="prof" 
+                                           itemValue="#{prof.idprofessor}" itemLabel="#{prof.nome}"
+                            ></f:selectItems>
+                        </h:selectOneMenu>
+                    </h:column>
+                    <h:column>
+                        Disciplina: 
+                        <h:selectOneMenu value="#{turma.idDisciplina}" >
+                            <f:selectItem itemLabel="Todas Disciplinas" itemValue="-1" />
+                            <f:selectItems value="#{turma.disciplinas}" var="disc" 
+                                           itemValue="#{disc.iddisciplina}" itemLabel="#{disc.nome}"
+                            ></f:selectItems>
+                        </h:selectOneMenu>
+                    </h:column>
+
+                    <h:column></h:column>
+                    <h:commandButton value="Pesquisar" />
+
+                </h:panelGrid>
+            </h:panelGroup>
+        </h:form>
+        <h:form>
+            <h:dataTable value="#{turma.turmas}" var="tur" border="1">
+                <h:column>
+                    <f:facet name="header">
+                        Ano
+                    </f:facet>
+                    #{tur.ano}
+
+                    <f:facet name="header">
+                        Semestre
+                    </f:facet>
+                    #{tur.semestre}
+
+                    <f:facet name="header">
+                        Professor
+                    </f:facet>
+                    #{tur.professor.nome}
+
+                    <f:facet name="header">
+                        Disciplina
+                    </f:facet>
+                    #{tur.disciplina.nome}
+
+                    <f:facet name="header">
+
+                    </f:facet>
+                    A X
+                </h:column>
+            </h:dataTable>
+        </h:form>
     </ui:define>
+        
+    
+        
 
 </ui:composition>
