@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="left">
+        <h:form>
+            <ul type="none">
+                <li> <h:commandLink action="index">VOLTAR</h:commandLink> </li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2" bgcolor="orange"
+                         title="LOGIN" style="margin: 0 auto;">
+                LOGIN: <h:inputText value="#{login.email}" />
+                SENHA: <h:inputSecret value="#{login.senha}" />
+                <h:column ></h:column>
+                <h:column> <h:outputLabel value="#{login.mensagem}" />  </h:column>
+                <h:column ></h:column>
+                <h:commandButton value="OK" style="width: 100%" 
+                                 action="#{login.logar()}"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../template/template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="left">
+        <h:form>
+            <ul type="none">
+                <li>  <h:commandLink action="#{turma.novaTurma()}" >Nova Turma</h:commandLink>  </li>
+                <li>  <h:commandLink action="#{turma.pesquisa()}"  >Pesquisar</h:commandLink>  </li>
+                <li>  <h:commandLink action="home">Voltar</h:commandLink>  </li>
+            </ul>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGroup rendered="#{turma.status == 'create' || 
+                                      turma.status == 'edit'}">
+                <h1>Nova Turma</h1>
+                <h:panelGrid columns="2">
+                    <h:column>                    
+                        Ano: <h:inputText value="#{turma.selecao.ano}" />
+                    </h:column>
+                    <h:column>                    
+                        Semestre: <h:inputText value="#{turma.selecao.semestre}" />
+                    </h:column>                   
+                    Descrição: <h:inputText value="#{turma.selecao.descricao}" />
+
+                    Professor:
+                    <h:selectOneMenu value="#{turma.selecao.professor.idprofessor}" >
+                        <f:selectItems value="#{turma.professores}" var="prof"
+                                       itemLabel="#{prof.nome}" itemValue="#{prof.idprofessor}"/>    
+                    </h:selectOneMenu>
+
+                    Disciplina:
+                    <h:selectOneMenu value="#{turma.selecao.disciplina.iddisciplina}" >
+                        <f:selectItems value="#{turma.disciplinas}" var="disc"
+                                       itemLabel="#{disc.nome}" itemValue="#{disc.iddisciplina}"/>    
+                    </h:selectOneMenu>
+
+                    Alunos:
+                    <h:selectManyListbox value="#{turma.alunosSelecionados}" >
+                        <f:selectItems value="#{turma.alunos}" var="alu"
+                                       itemLabel="#{alu.nome}" itemValue="#{alu.idaluno}"/> 
+                    </h:selectManyListbox>
+
+                    <h:commandButton value="Gravar" action="#{turma.gravar()}" />
+                    <h:commandButton value="Voltar"  action="#{turma.voltar()}" />
+
+                </h:panelGrid>
+            </h:panelGroup>
+
+
+            <h:panelGroup rendered="#{turma.status == 'search'}">
+                <h1>Pesquisa</h1>
+                <h:panelGrid columns="2">
+                    <h:column>                    
+                        Ano: <h:inputText value="#{turma.ano}" />
+                    </h:column>
+                    <h:column>                    
+                        Semestre: <h:inputText value="#{turma.semestre}" />
+                    </h:column>
+
+                    Professor:
+                    <h:selectOneMenu value="#{turma.idProfessor}" >
+                        <f:selectItem itemLabel="TODOS PROFESSORES" 
+                                      itemValue="-1"/>
+                        <f:selectItems value="#{turma.professores}" var="prof"
+                                       itemLabel="#{prof.nome}" itemValue="#{prof.idprofessor}"/>    
+                    </h:selectOneMenu>
+
+                    Disciplina:
+                    <h:selectOneMenu value="#{turma.idDisciplina}" >
+                        <f:selectItem itemLabel="TODAS DISCIPLINAS" 
+                                      itemValue="-1"/>
+                        <f:selectItems value="#{turma.disciplinas}" var="disc"
+                                       itemLabel="#{disc.nome}" itemValue="#{disc.iddisciplina}"/>    
+                    </h:selectOneMenu>
+
+                    <h:column ></h:column>
+                    <h:commandButton value="Pesquisar" action="#{turma.realizaPesquisa()}" />
+                </h:panelGrid>
+            </h:panelGroup>
+
+
+            <h:panelGroup rendered="#{turma.status == 'delete'}">
+                <h1>Deseja Apagar a Turma #{turma.turmaApagada.descricao}?</h1>
+                <h:panelGrid columns="2">
+
+                    <h:commandButton value="Sim"  />
+                    <h:commandButton value="Não" action="#{turma.retornaNãoApagar()}" />
+
+                </h:panelGrid>
+            </h:panelGroup>
+
+
+
+            <h:dataTable value="#{turma.turmas}" var="tur" border="1" 
+                         rendered="#{turma.status == 'all' || turma.status == 'search'}">
+
+                <h:column>
+                    <f:facet name="header">
+                        Ano
+                    </f:facet>
+                    #{tur.ano}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Semestre
+                    </f:facet>
+                    #{tur.semestre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Descrição
+                    </f:facet>
+                    #{tur.descricao}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Professor
+                    </f:facet>
+                    #{tur.professor.nome}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Disciplina
+                    </f:facet>
+                    #{tur.disciplina.nome}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Qtde Alunos
+                    </f:facet>
+                    #{tur.alunoTurmaList.size()}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        Ações
+                    </f:facet>
+                    <h:commandLink value="A" action="#{turma.alterar(tur)}" >
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="X" action="#{turma.apagar(tur)}" >
+                    </h:commandLink>
+                    &nbsp;
+                    <h:commandLink value="L" action="#{turma.lancaNotaFrequencia(tur)}" >
+                    </h:commandLink>
+                </h:column>
+
+
+            </h:dataTable>
+
+            <h:panelGroup rendered="#{turma.status == 'lance'}">
+                <h:dataTable value="#{turma.selecao.alunoTurmaList}" var="aTur" border="1" >
+
+                    <h:column>
+                        <f:facet name="header">
+                            Nome:
+                        </f:facet>
+                        #{aTur.aluno1.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Nota 1:
+                        </f:facet>
+                        <h:inputText value="#{aTur.nota1}" />                    
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Nota 2:
+                        </f:facet>
+                        <h:inputText value="#{aTur.nota2}" />                    
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Frequencia:
+                        </f:facet>
+                        <h:inputText value="#{aTur.frequencia}" />                    
+                    </h:column>              
+                </h:dataTable>
+                <h:commandButton value="Gravar" action="#{turma.gravar()}" />
+                <h:commandButton value="Voltar"  action="#{turma.voltar()}" />
+            </h:panelGroup>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
